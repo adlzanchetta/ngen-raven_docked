@@ -5,6 +5,7 @@ RUN yum update -y \
     && yum -y install epel-release \
     && yum repolist \
     && yum install -y tar git gcc-c++ gcc make cmake python38 python38-devel python38-numpy bzip2 udunits2-devel \
+    && yum install -y openmpi openmpi-devel \
     && dnf clean all \
   	&& rm -rf /var/cache/yum
 
@@ -21,10 +22,10 @@ RUN git clone https://github.com/NOAA-OWP/ngen.git /ngen
 
 WORKDIR /ngen
 
-RUN git submodule update --init --recursive -- test/googletest
-
-RUN git submodule update --init --recursive -- extern/pybind11
-
+# VERSION DEPENDENT: ensure commit of 2024.24.01 - 6e7f370b7f97fa2340d10f1033f01d1db90e5b30
+RUN git reset --hard 6e7f370 \
+ && git submodule update --init --recursive -- extern/googletest \
+ && git submodule update --init --recursive -- extern/pybind11
 
 RUN cmake -DNGEN_WITH_NETCDF:BOOL=OFF \
           -DNGEN_WITH_SQLITE:BOOL=OFF \
@@ -39,11 +40,6 @@ WORKDIR /ngen/extern/test_bmi_cpp/cmake_build
 RUN make
 
 WORKDIR /ngen/
-
-# for the parallel build, we need to install openmpi
-RUN yum install -y openmpi openmpi-devel \
- && yum clean all \
- && rm -rf /var/cache/yum
 
 # for the parallel build, we need to load the openmpi module so that cmake can the MPI headers
 RUN source /etc/profile.d/modules.sh \
@@ -60,6 +56,12 @@ RUN bash -c "cd /ngen/build_parallel && cmake --build . --target partitionGenera
 
 # the following lines are for including Raven to the image
 RUN git clone https://github.com/CSHS-CWRA/RavenHydroFramework.git /raven
+
+WORKDIR /raven
+
+# VERSION DEPENDENT: ensure commit of 2024.17.01 - 2831718b7ceb84ae34bcd46010c73bd0233f9ab2
+RUN git reset --hard 2831718
+
 RUN mkdir /raven/build \
  && cmake -DCOMPILE_LIB=ON -B /raven/build/ -S /raven/ \
  && make -C /raven/build/
