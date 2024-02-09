@@ -23,9 +23,13 @@ RUN git clone https://github.com/NOAA-OWP/ngen.git /ngen
 WORKDIR /ngen
 
 # VERSION DEPENDENT: ensure commit of 2024.24.01 - 6e7f370b7f97fa2340d10f1033f01d1db90e5b30
-RUN git reset --hard 6e7f370 \
- && git submodule update --init --recursive -- extern/googletest \
- && git submodule update --init --recursive -- extern/pybind11
+RUN git reset --hard 6e7f370
+
+# building the submodules is needed for the main build
+RUN git submodule update --init --recursive -- test/googletest
+
+# why it needs to be done separatelly is a mistery
+RUN git submodule update --init --recursive -- extern/pybind11
 
 RUN cmake -DNGEN_WITH_NETCDF:BOOL=OFF \
           -DNGEN_WITH_SQLITE:BOOL=OFF \
