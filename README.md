@@ -78,14 +78,15 @@ $ docker image ls
 An iterative Docker container with the arbitrary name ```ngen-raven_latest``` <sup>1</sup> can be started with:
 
 ```bash
-$ docker run -it localbuild/ngen-raven:latest --name ngen-raven_latest
+$ docker run -it --name ngen-raven_latest localbuild/ngen-raven:latest
 ```
 
 **Note<sup>1</sup> :** If a name is not given, a random name composed by two random words will be set, so, while not mandatory, providing a meaningful name is recommended.
 
-Inside the iterative session, NextGen realization (without Raven) provided as example can be run with:
+Inside the iterative session, a NextGen realization provided as example (without Raven) can be run with:
 
 ```bash
+# cd /ngen
 # /ngen/build_serial/ngen data/catchment_data.geojson all data/nexus_data.geojson all data/example_realization_config.json
 ```
 
