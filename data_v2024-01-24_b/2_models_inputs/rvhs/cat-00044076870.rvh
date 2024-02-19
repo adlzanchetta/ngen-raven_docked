@@ -1,0 +1,94 @@
+#########################################################################
+:FileType rvh ASCII Raven 2.5
+# DataType         Raven HRU file
+#
+#------------------------------------------------------------------------
+# Converted from UBCWM WAT file
+
+#---------------------------------------------------------
+# Sub basins
+:SubBasins
+ :Attributes, ID,   NAME, DOWNSTREAM_ID, PROFILE, REACH_LENGTH, GAUGED
+ :Units,      none, none, none,          none,    km,           none
+  1,	    Alouette, 	-1, 	NONE, 	_AUTO, 	1
+:EndSubBasins
+
+#---------------------------------------------------------
+# Hydrologic Response Units
+:HRUs
+ :Attributes, ID,   AREA, ELEVATION, LATITUDE, LONGITUDE, BASIN_ID, LAND_USE_CLASS, VEG_CLASS, SOIL_PROFILE, AQUIFER_PROFILE, TERRAIN_CLASS, SLOPE, ASPECT
+ :Units,      none, km2,  m,         deg,      deg,       none,     none,           none,      none,         none,            none,            deg, degN
+   	 1,	 	 0.3052056200087539,	 	 161,	 49.3,	 -100,	 1,	 OPEN_1,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 0
+   	 2,	 	1.0820926527583095,	 161,	 49.3,	 -100,	 1,	 OPEN_1,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 180
+   	 3,	 	0.7470067622591878,	 	 161,	 49.3,	 -100,	 1,	 FOREST_1,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 140.4
+   	 6,	 	 0.21222764372854963,	 	 354,	 49.3,	 -100,	 1,	 OPEN_2,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 0
+   	 7,	 	 0.49519701289839413,	 354,	 49.3,	 -100,	 1,	 OPEN_2,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 180
+   	 8,	 	1.2233207272580955,	 354,	 49.3,	 -100,	 1,	 FOREST_2,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 126
+   	 11,	 0.2526344793699931,	 552,	 49.3,	 -100,	 1,	 OPEN_3,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 0
+   	 12,	 0.5894808630974281,	 552,	 49.3,	 -100,	 1,	 OPEN_3,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 180
+   	 13,	 1.2058329966965364,	 552,	 49.3,	 -100,	 1,	 FOREST_3,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 126
+   	 16,	 0.3526149500888153,	 749,	 49.3,	 -100,	 1,	 OPEN_4,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 0
+   	 17,	 0.749307617109086,	 749,	 49.3,	 -100,	 1,	 OPEN_4,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 180
+   	 18,	 1.1865934088229906,	 749,	 49.3,	 -100,	 1,	 FOREST_4,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 122.4
+   	 21,	 0.3289001070045424,	 950,	 49.3,	 -100,	 1,	 OPEN_5,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 0
+   	 22,	 0.7320666270140042,	 950,	 49.3,	 -100,	 1,	 OPEN_5,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 180
+   	 23,	 0.9314637664857485,	 950,	 49.3,	 -100,	 1,	 FOREST_5,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 124.2
+   	 26,	 0.3059581784315088,	     1171,	 49.3,	 -100,	 1,	 OPEN_6,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 0
+   	 27,	 0.7490670451542709,	 1171,	 49.3,	 -100,	 1,	 OPEN_6,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 180
+   	 28,	 0.6289784601199038,	 1171,	 49.3,	 -100,	 1,	 FOREST_6,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 127.8
+   	 31,	 0.03859372500865373,	 1500,	 49.3,	 -100,	 1,	 OPEN_7,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 0
+   	 32,	 0.12920502841952705,	 1500,	 49.3,	 -100,	 1,	 OPEN_7,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 180
+   	 33,	 0.02342492303616239,	 1500,	 49.3,	 -100,	 1,	 FOREST_7,	 FOREST,	 DEFAULT_P,	 [NONE],	 [NONE],	 0,	 138.6
+   	 34,	 0.002467404664770232,	     1500,	 49.3,	 -100,	 1,	 GLACIER,	 FOREST,	 GLACIER,	 [NONE],	 [NONE],	 0,	 0
+   	 35,	 0.002467404664770232,	     1500,	 49.3,	 -100,	 1,	 GLACIER,	 FOREST,	 GLACIER,	 [NONE],	 [NONE],	 0,	 180
+:EndHRUs
+
+#---------------------------------------------------------
+# HRU Groups
+# - one for each elevation band 
+# - required because UBCWM aggregates the TOP_SOIL state variable over each band
+# # - also implemented for land class types for reporting. 
+# NOTE: only required for strict UBCWM emulation
+#
+
+#---------------------------------------------------------
+# Elevation Bands
+#
+:HRUGroup Band1
+ 1, 2, 3
+:EndHRUGroup
+:HRUGroup Band2
+ 6, 7, 8
+:EndHRUGroup
+:HRUGroup Band3
+ 11, 12, 13
+:EndHRUGroup
+:HRUGroup Band4
+ 16, 17, 18
+:EndHRUGroup
+:HRUGroup Band5
+ 21, 22, 23
+:EndHRUGroup
+:HRUGroup Band6
+ 26, 27, 28
+:EndHRUGroup
+:HRUGroup Band7
+ 31, 32, 33, 34, 35
+:EndHRUGroup
+
+#---------------------------------------------------------
+# Land Classes
+#
+:HRUGroup Open_N
+  1, 6, 11, 16, 21, 26, 31
+:EndHRUGroup
+:HRUGroup Open_S
+ 2, 7, 12, 17, 22, 27, 32
+:EndHRUGroup
+:HRUGroup Forest
+ 3, 8, 13, 18, 23, 28, 33
+:EndHRUGroup
+:HRUGroup Glacier
+ 34, 35
+:EndHRUGroup
+

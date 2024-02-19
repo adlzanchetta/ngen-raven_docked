@@ -1,0 +1,2 @@
+### comand line case
+cli_args: /data/1_raw/input/common_Alouette2 -p /data/1_raw/params/common_Alouette_hbv.rvp -c /data/1_raw/inicond/common_Alouette_hbv.rvc -h /data/2_models_inputs/rvhs/cat-00044076866.rvh -r cat-00044076866 -s
