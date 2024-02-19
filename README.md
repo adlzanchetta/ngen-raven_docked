@@ -63,17 +63,17 @@ docker image ls
 
 ### For dated versions of both NGen and Raven
 
-Select the brench that has the desired date - in this example: "*v-2024.01.24*"
+Select the brench that has the desired date - in this example: "*v-2024.02.19*"
 
 ```bash
-git switch v-2024.01.24
+git switch v-2024.02.19
 git pull
 ```
 
-Build a Docker image with an arbitrary tag - suggested here: "*localbuild/ngen-raven:2024.01.24*":
+Build a Docker image with an arbitrary tag - suggested here: "*localbuild/ngen-raven:2024.02.19*":
 
 ```bash
-docker build . --file Dockerfile --tag localbuild/ngen-raven:2024.01.24
+docker build . --file Dockerfile --tag localbuild/ngen-raven:2024.02.19
 ```
 
 If everything worked fine, the chosen tag should be listed in the output of:
@@ -86,10 +86,10 @@ docker image ls
 
 ### Running only NGen with embedded data
 
-An iterative Docker container with the arbitrary name ```ngen-raven_2024-01-24``` <sup>1</sup> can be started with:
+An iterative Docker container with the arbitrary name ```ngen-raven_2024-02-19``` <sup>1</sup> can be started with:
 
 ```bash
-docker run --name ngen-raven_2024-01-24 -it localbuild/ngen-raven:2024.01.24
+docker run --name ngen-raven_2024-02-19 -it localbuild/ngen-raven:2024.02.19
 ```
 
 **Note<sup>1</sup> :** If a name is not given, a random name composed by two random words will be set. Thus, while not mandatory, providing a meaningful name is recommended.
@@ -110,16 +110,16 @@ To have a Docker container accessing files in the hosting machine, it need to be
 Suppose you want to mount the folder ```./some/local_data```<sup>2</sup>, the recommended command to be used is:
 
 ```bash
-docker run -it -v ./v2024-01-24_NGen-Raven/data:/data --name ngen-raven_2024-01-24 localbuild/ngen-raven:2024.01.24
+docker run -it -v ./v2024-02-19_NGen-Raven/data:/data --name ngen-raven_2024-02-19 localbuild/ngen-raven:2024.02.19
 ```
 
 **Note<sup>2</sup> :** It is assumed that the Docker is already configured to have the folder ```./some/local_data``` among the shared resources.
 
-The abovepresented command will start a container named ```ngen-raven_2024-01-24``` in which any change in the content of ```/data``` will persist at ```./some/local_data``` even after the end of the session.
+The abovepresented command will start a container named ```ngen-raven_2024-02-19``` in which any change in the content of ```/data``` will persist at ```./some/local_data``` even after the end of the session.
 
 ### Running NGen + Raven with persistent external files
 
-Two NGen setups calling Raven are provided as example in the directories ```data_v2024-01-24_[x]``` (```[x]``` is a placeholder):
+Two NGen setups calling Raven are provided as example in the directories ```data_v2024-02-19_[x]``` (```[x]``` is a placeholder):
 
 - ```[...]_a```: one realization file calling one Raven model (for basic development);
 - ```[...]_b```: one realization file calling 50+ Raven models (for testing concurrency).
@@ -129,7 +129,7 @@ These files are NOT included in a Docker container created out of this ```Docker
 To run one of these examples, it is recommended to launch a Docker container having the root of this repository was working directory with:
 
 ```bash
-docker run -it -v ./data_v2024-01-24_[x]:/data localbuild/ngen-raven:2024.01.24
+docker run -it -v ./data_v2024-02-19_[x]:/data localbuild/ngen-raven:2024.02.19
 ```
 
 Inside the container's CLI:
@@ -139,7 +139,7 @@ cd /data/3_models_outputs/
 /ngen/build_serial/ngen /data/1_raw/gis/catchments.geojson all /data/1_raw/gis/nexus.geojson all /data/2_models_inputs/realization_raven.json
 ```
 
-The output files will be persistently written at ```./data_v2024-01-24_[x]/3_models_outputs``` in your local machine.
+The output files will be persistently written at ```./data_v2024-02-19_[x]/3_models_outputs``` in your local machine.
 
 ## Developing NGen or Raven with Dev Containers
 
@@ -169,7 +169,7 @@ Now this window of VS Code works as if your computer were the own Container. You
 The repository folder is mounted in the container at `/workspace/ngen-raven_docked`. You can run one of the external examples copying the respective folder to `/data`, for example:
 
 ```bash
-cp -r /workspaces/git_repo/data_v2024-01-24 /data
+cp -r /workspaces/git_repo/data_v2024-02-19 /data
 ```
 
 and call `ngen` from the folder `/data/3_models_output`, as described in the end of session [Running NGen + Raven with persistent external files](#running-ngen--raven-with-persistent-external-files).

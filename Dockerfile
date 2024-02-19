@@ -22,21 +22,18 @@ RUN git clone https://github.com/NOAA-OWP/ngen.git /ngen
 
 WORKDIR /ngen
 
-# VERSION DEPENDENT: ensure commit of 2024.24.01 - 6e7f370b7f97fa2340d10f1033f01d1db90e5b30
-RUN git reset --hard 6e7f370
+# VERSION DEPENDENT: ensure commit of 2024.19.02 - be518f7deecaccf21ce8105e32196bf4c0b4d440
+RUN git pull \
+ && git reset --hard be518f7
 
-# building the submodules is needed for the main build
-RUN git submodule update --init --recursive -- test/googletest
-
-# why it needs to be done separatelly is a mistery
-RUN git submodule update --init --recursive -- extern/pybind11
+RUN git submodule update --init --recursive -- test/googletest \
+ && git submodule update --init --recursive -- extern/pybind11
 
 RUN cmake -DNGEN_WITH_NETCDF:BOOL=OFF \
           -DNGEN_WITH_SQLITE:BOOL=OFF \
           -B /ngen/build_serial \
-          -S .
-
-RUN cmake --build ./build_serial --target ngen
+          -S . \
+ && cmake --build ./build_serial --target ngen
 
 # extern googletest also needs o be built
 WORKDIR /ngen/extern/test_bmi_cpp/cmake_build
@@ -58,13 +55,14 @@ RUN source /etc/profile.d/modules.sh \
 # it is also useful to have the partitionGenerator executable built
 RUN bash -c "cd /ngen/build_parallel && cmake --build . --target partitionGenerator --"
 
-# the following lines are for including Raven to the image
-RUN git clone https://github.com/CSHS-CWRA/RavenHydroFramework.git /raven
+# the following lines are for including Raven to the image (adlzanchetta fork is used for dev)
+# RUN git clone https://github.com/CSHS-CWRA/RavenHydroFramework.git /raven
+RUN git clone https://github.com/adlzanchetta/RavenHydroFramework.git /raven
 
 WORKDIR /raven
 
-# VERSION DEPENDENT: ensure commit of 2024.17.01 - 2831718b7ceb84ae34bcd46010c73bd0233f9ab2
-RUN git reset --hard 2831718
+# VERSION DEPENDENT: ensure commit of 2024.02.19 - bc4038fb296c5de0429bd9ca6e1e6c2321befefb
+RUN git reset --hard bc4038f
 
 RUN mkdir /raven/build \
  && cmake -DCOMPILE_LIB=ON -B /raven/build/ -S /raven/ \
@@ -73,3 +71,5 @@ RUN mkdir /raven/build \
 # activating the openmpi module as session starts makes 'mpirun' and mpi headers available with
 # 'docker run -it <image_name>'
 CMD bash -c "source /etc/profile.d/modules.sh && module load mpi/openmpi-x86_64 && /bin/bash"
+
+WORKDIR /
