@@ -1,0 +1,30 @@
+name: Build Docker image
+
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches:
+    - main
+    - v-2024.02.19-dev-actions
+    - "*"
+  pull_request:
+    branches:
+    - main
+    - v-2024.02.19-dev-actions
+    - "*"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ github.ref_name }}
+    steps:
+      - name: Print a Hello
+        run: echo "HELLO!"
+      - name: Print branch nam
+        run: echo BRANCH IS ${{ env.name }} RIGHT?
