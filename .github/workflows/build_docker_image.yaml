@@ -24,7 +24,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Print a Hello
-        run: echo "HELLO!"
-      - name: Print branch nam
+      - name: Print branch name
         run: echo BRANCH IS ${{ env.name }} RIGHT?
+      - name: Build Docker
+        run: docker build . --file Dockerfile --tag localbuild/ngen-raven:${{ env.name }}
