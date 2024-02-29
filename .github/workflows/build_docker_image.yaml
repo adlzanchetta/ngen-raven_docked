@@ -1,0 +1,29 @@
+name: Build Docker image
+
+on:
+  push:
+    branches:
+    - main
+    - "*"
+  pull_request:
+    branches:
+    - main
+    - "*"
+
+  # Allows you to run this workflow manually from the Actions tab for all branches
+  workflow_dispatch:
+
+env: 
+  branch_name: ${{ github.ref_name }}
+
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build Docker container
+        run: docker build . --file Dockerfile --tag localbuild/ngen-raven:${{ env.branch_name }}
+      - name: Execute tests
+        run: docker run localbuild/ngen-raven:${{ env.branch_name }} /tests/src/test_all.sh

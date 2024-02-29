@@ -8,11 +8,11 @@
 						"model_type_name": "raven",
 						"library_file": "/raven/build/libravenbmi.so",
 						"init_config": "",
-						"main_output_variable": "streamflow",
-						"variables_names_map": {
-							"temp_ave": "TMP_2maboveground",
-							"rainfall": "precip_rate"
-						},
+						"main_output_variable": "OUTFLOW",
+                        "variables_names_map": {
+                            "TEMP_AVE": "TMP_2maboveground",
+                            "PRECIP": "precip_rate"
+                        },
 						"create_function": "bmi_model_create",
 						"destroy_function_": "bmi_model_destroy",
 						"uses_forcing_file": false
@@ -38,10 +38,10 @@
                         "model_type_name": "raven",
                         "library_file": "/raven/build/libravenbmi.so",
                         "init_config": "/data/2_models_inputs/init_confs/cat-1.yaml",
-                        "main_output_variable": "streamflow",
+                        "main_output_variable": "OUTFLOW",
                         "variables_names_map": {
-                            "temp_ave": "TMP_2maboveground",
-                            "precipitation": "precip_rate"
+                            "TEMP_AVE": "TMP_2maboveground",
+                            "PRECIP": "precip_rate"
                         },
                         "create_function": "bmi_model_create",
                         "destroy_function_": "bmi_model_destroy",
