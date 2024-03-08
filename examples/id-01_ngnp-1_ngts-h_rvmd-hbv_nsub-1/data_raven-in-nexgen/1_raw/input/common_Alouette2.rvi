@@ -10,9 +10,6 @@
 :StartDate          2016-01-01 00:00:00
 :TimeStep           01:00:00
 ## :EndDate            2016-01-02 17:00:00
-## :StartDate          1991-10-01 00:00:00
-## :Duration           1096 00:00:00
-## :TimeStep           24:00:00
 
 #------------------------------------------------------------------------
 # Model options
@@ -23,8 +20,8 @@
 :Routing             ROUTE_NONE
 :CatchmentRoute      TRIANGULAR_UH
 
-:Evaporation                 PET_MONTHLY_FACTOR
-:OW_Evaporation              PET_MONTHLY_FACTOR
+:Evaporation                 PET_NONE
+:OW_Evaporation              PET_NONE
 :SWRadiationMethod           SW_RAD_DEFAULT
 :SWCloudCorrect              SW_CLOUD_CORR_NONE
 :SWCanopyCorrect             SW_CANOPY_CORR_NONE

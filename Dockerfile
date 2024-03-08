@@ -6,9 +6,10 @@ RUN yum update -y \
     && yum repolist \
     && yum install -y tar git gcc-c++ gcc make cmake python38 python38-devel python38-numpy bzip2 udunits2-devel \
     && yum install -y openmpi openmpi-devel \
+    && pip3.8 install --no-deps pandas==1.3.5 pytz==2024.1 python-dateutil==2.8.2 six==1.16.0 \
     && dnf clean all \
-  	&& rm -rf /var/cache/yum \
-    && pip3.8 install --no-deps pandas==1.3.5 pytz==2024.1 python-dateutil==2.8.2 six==1.16.0
+    && rm -rf /var/cache/yum
+#     && pip3.8 cache purge   # TODO: remove cache manually 
 
 RUN curl -L -o boost_1_79_0.tar.bz2 https://sourceforge.net/projects/boost/files/boost/1.79.0/boost_1_79_0.tar.bz2/download \
     && tar -xjf boost_1_79_0.tar.bz2 \
@@ -26,7 +27,7 @@ RUN git clone https://github.com/NOAA-OWP/ngen.git /ngen_hourly
 
 WORKDIR /ngen_hourly
 
-# VERSION DEPENDENT: ensure commit of 2024.19.02 - be518f7deecaccf21ce8105e32196bf4c0b4d440
+# VERSION DEPENDENT: ensure commit of 2024.02.19 - be518f7deecaccf21ce8105e32196bf4c0b4d440
 RUN git pull \
  && git reset --hard be518f7 \
  && git submodule update --init --recursive -- test/googletest \
@@ -68,14 +69,13 @@ RUN ln -s /ngen_hourly/build_serial/ngen /ngen_hourly_serial \
 # ## NGen daily ################################################################################## #
 
 # adlzanchetta's fork of NGen supports daily time step, so we will build it as /ngen_daily
-
-RUN git clone https://github.com/adlzanchetta/ngen_daily-timestep.git /ngen_daily
+# changes are in the 'modified' branch
+RUN git clone -b modified https://github.com/adlzanchetta/ngen_daily-timestep.git /ngen_daily
 
 WORKDIR /ngen_daily
 
-# VERSION DEPENDENT: ensure commit of 2024.19.02 -
-# TODO: update the commit hash
-RUN git reset --hard be518f7 \
+# VERSION DEPENDENT: ensure commit of 2024.02.19 - cbfecb1198f3281b27992e846a0a374a7397bfed
+RUN git reset --hard cbfecb1 \
  && git submodule update --init --recursive -- test/googletest \
  && git submodule update --init --recursive -- extern/pybind11
 
@@ -116,18 +116,17 @@ RUN ln -s /ngen_daily/build_serial/ngen /ngen_daily_serial \
 
 # the following lines are for including Raven to the image (adlzanchetta fork is used for dev)
 # RUN git clone https://github.com/CSHS-CWRA/RavenHydroFramework.git /raven
-RUN git clone https://github.com/adlzanchetta/RavenHydroFramework.git /raven
+RUN git clone -b bugfix/BMI_duration-almost-infinite https://github.com/adlzanchetta/RavenHydroFramework.git /raven
 
 WORKDIR /raven
 
-# VERSION DEPENDENT: ensure commit of 2024.02.19 - bc4038fb296c5de0429bd9ca6e1e6c2321befefb
-RUN git reset --hard bc4038f
-
-RUN mkdir /raven/build \
+# VERSION DEPENDENT: ensure commit of 2024.02.19 - 62a810c0b678b81a133f5d6b042d2b88400dd05b
+RUN git pull \
+ && git reset --hard fb38666 \
+ && mkdir /raven/build \
  && cmake -DCOMPILE_LIB=ON -B /raven/build/ -S /raven/ \
- && make -C /raven/build/
-
-RUN ln -s /raven/build/Raven /Raven
+ && make -C /raven/build/ \
+ && ln -s /raven/build/Raven /Raven
 
 
 # ## Final touches ############################################################################### #

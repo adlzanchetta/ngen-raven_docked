@@ -20,8 +20,8 @@
 :Routing             ROUTE_NONE
 :CatchmentRoute      TRIANGULAR_UH
 
-:Evaporation                 PET_MONTHLY_FACTOR
-:OW_Evaporation              PET_MONTHLY_FACTOR
+:Evaporation                 PET_NONE
+:OW_Evaporation              PET_NONE
 :SWRadiationMethod           SW_RAD_DEFAULT
 :SWCloudCorrect              SW_CLOUD_CORR_NONE
 :SWCanopyCorrect             SW_CANOPY_CORR_NONE

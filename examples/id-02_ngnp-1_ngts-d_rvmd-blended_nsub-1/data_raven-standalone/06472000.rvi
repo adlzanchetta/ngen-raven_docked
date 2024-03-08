@@ -1,0 +1,69 @@
+#########################################################################                                  
+:FileType          rvi ASCII Raven rev252 (v2.9)                                                                             
+:WrittenBy         James Craig & Juliane Mai                                                                       
+:CreationDate      June 2019
+#
+# RAVEN run of JAMES R NEAR STRATFORD,SD (06472000) using weighted model options                                                        
+#------------------------------------------------------------------------
+#
+:StartDate               1954-01-01 00:00:00
+:EndDate                 2010-12-31 00:00:00
+# :EvaluationTime          1991-01-01 00:00:00
+# :Duration              20819                                                                                   
+:TimeStep                1.0                                                                                   
+:Method                  ORDERED_SERIES 
+
+:PotentialMeltMethod     POTMELT_HMETS
+:RainSnowFraction        RAINSNOW_HBV          # RAINSNOW_DINGMAN      # 
+#:SWRadiationMethod      SW_RAD_NONE           # no radiation is faster
+:Evaporation             PET_OUDIN             # PET_DATA     
+:CatchmentRoute          ROUTE_DUMP
+:Routing                 ROUTE_NONE 
+:SoilModel               SOIL_MULTILAYER 3
+
+:Alias DELAYED_RUNOFF CONVOLUTION[1] 
+
+:HydrologicProcesses
+  :Precipitation   RAVEN_DEFAULT                         ATMOS_PRECIP   MULTIPLE 
+  :ProcessGroup #infiltration group
+                :Infiltration    INF_HMETS               PONDED_WATER   MULTIPLE 
+                :Infiltration    INF_VIC_ARNO            PONDED_WATER   MULTIPLE 
+                :Infiltration    INF_HBV                 PONDED_WATER   MULTIPLE 
+  :EndProcessGroup CALCULATE_WTS 9.973745E-01 7.856690E-02
+                  :Overflow      OVERFLOW_RAVEN          SOIL[0]        DELAYED_RUNOFF
+  :ProcessGroup #quickflow group
+                :Baseflow        BASE_LINEAR_ANALYTIC    SOIL[0]        SURFACE_WATER   # interflow, really
+                :Baseflow        BASE_VIC                SOIL[0]        SURFACE_WATER
+                :Baseflow        BASE_TOPMODEL           SOIL[0]        SURFACE_WATER
+  :EndProcessGroup CALCULATE_WTS 9.996555E-01 7.951504E-01
+  :Percolation                   PERC_LINEAR             SOIL[0]        SOIL[1]         # recharge
+    :Overflow                    OVERFLOW_RAVEN          SOIL[1]        DELAYED_RUNOFF
+  :Percolation                   PERC_LINEAR             SOIL[1]        SOIL[2]         # loss to deep groundwater (simplifies to HMETS when PERC_COEFF=0)
+  :ProcessGroup #evaporation group
+                :SoilEvaporation SOILEVAP_ALL            SOIL[0]        ATMOSPHERE      # AET
+                :SoilEvaporation SOILEVAP_TOPMODEL       SOIL[0]        ATMOSPHERE      # AET
+  :EndProcessGroup CALCULATE_WTS 9.076608E-01
+  :Convolve                      CONVOL_GAMMA            CONVOLUTION[0] SURFACE_WATER   # 'surface runoff'
+  :Convolve                      CONVOL_GAMMA_2          DELAYED_RUNOFF SURFACE_WATER   # 'delayed runoff'
+  :ProcessGroup #quickflow group
+                :Baseflow        BASE_LINEAR_ANALYTIC    SOIL[1]        SURFACE_WATER
+                :Baseflow        BASE_POWER_LAW          SOIL[1]        SURFACE_WATER
+  :EndProcessGroup CALCULATE_WTS 9.467828E-01
+  :ProcessGroup #snow balance group
+                :SnowBalance     SNOBAL_HMETS            MULTIPLE       MULTIPLE
+                :SnowBalance     SNOBAL_SIMPLE_MELT      SNOW           PONDED_WATER
+                :SnowBalance     SNOBAL_HBV              MULTIPLE       MULTIPLE
+                #:SnowBalance    SNOBAL_GAWSER           MULTIPLE       MULTIPLE
+  :EndProcessGroup CALCULATE_WTS 8.889325E-01 9.953957E-01 
+:EndHydrologicProcesses
+
+#:CreateRVPTemplate
+
+#---------------------------------------------------------
+# Output Options
+#
+:EvaluationMetrics NASH_SUTCLIFFE RMSE KLING_GUPTA
+# :SuppressOutput
+:SilentMode
+# :DontWriteWatershedStorage
+#

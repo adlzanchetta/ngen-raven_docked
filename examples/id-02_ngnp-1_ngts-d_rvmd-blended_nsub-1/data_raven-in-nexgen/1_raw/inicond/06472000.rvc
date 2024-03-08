@@ -1,0 +1,24 @@
+#########################################################################                                  
+:FileType          rvc ASCII Raven rev252 (v2.9)                                                                             
+:WrittenBy         James Craig & Juliane Mai                                                                       
+:CreationDate      June 2019
+#
+# RAVEN run of JAMES R NEAR STRATFORD,SD (06472000) using weighted model options                                                           
+#------------------------------------------------------------------------                                 
+#
+
+# tied parameters:
+# (it is important for OSTRICH to find every parameter place holder somewhere in this file)
+# (without this "3.354741E-01" and "1.265224E+00" wouldn't be detectable)
+#    para_1.677371E+02 = para_x29 * 1000. / 2. = 3.354741E-01 / 2. [m] = 1.677371E+02 [mm]
+#    para_6.326118E+02 = para_x30 * 1000. / 2. = 1.265224E+00 / 2. [m] = 6.326118E+02 [mm]
+
+# initialize to 1/2 full
+#:UniformInitialConditions SOIL[0] 1.677371E+02 # x(29)*1000/2 [mm]         
+#:UniformInitialConditions SOIL[1] 6.326118E+02 # x(30)*1000/2 [mm]         
+
+:HRUStateVariableTable (formerly :IntialConditionsTable)
+   :Attributes SOIL[0] SOIL[1]
+   :Units mm mm
+   1 1.677371E+02 6.326118E+02
+:EndHRUStateVariableTable

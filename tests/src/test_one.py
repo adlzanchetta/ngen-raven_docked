@@ -17,7 +17,7 @@ import re
 #
 TEST_FDNA_KEYS_INT = {"ngnp", "nsub"}
 TEST_FDNA_VALUES_NGTS = {'h', 'd'}
-TEST_FDNA_VALUES_RVMD = {'gr4j', 'hbv', 'hmets', 'hymod', 'mohyse', 'sacsma', 'mixed'}
+TEST_FDNA_VALUES_RVMD = {'gr4j', 'hbv', 'hmets', 'hymod', 'mohyse', 'sacsma', 'vic', 'blended', 'mixed'}
 
 # 
 TEST_SUBFDNA_RV_STANDALONE = "data_raven-standalone"
@@ -216,10 +216,18 @@ def compare_results(meta_info: dict) -> dict:
 
         # first record from the Raven standalone model is garbage, so we remove it and the last record
         #  from the NexGen model to have the same number of records
-        i_discharges_raven = raven_df[f'{i_cat_fibana} [m3/s]'].values[1:]
+        i_col_name = f'{i_cat_fibana} [m3/s]'
+        if i_col_name not in raven_df.columns:
+            fail_exit(f"Column {i_col_name} not found in 'cats_Hydrographs.csv' (columns: "\
+                      f"{', '.join(raven_df.columns)}).")
+        i_discharges_raven = raven_df[i_col_name].values[1:]
         i_ngen_df = pd.read_csv(i_cat_fina, index_col="Time Step", infer_datetime_format=True,
                                 parse_dates=['Time'])
         i_discharge_ngen = i_ngen_df['OUTFLOW'].values[:-1]
+
+        echo(f"Comparing {i_cat_fibana}.")
+        echo(f"  NexGen: {i_discharge_ngen[:3]} ... {i_discharge_ngen[-4:]}")
+        echo(f"   Raven: {i_discharges_raven[:3]} ... {i_discharges_raven[-4:]}")
 
         # we divide the difference by the average of the average to reduce the bias caused by the scale
         i_pct_diff = np.abs((i_discharges_raven - i_discharge_ngen) /
@@ -339,19 +347,21 @@ def passed(results: dict) -> bool:
             echo(f"{i_e} PASS simulated discharge comparison.")
         else:
             if (not i_pass_max) and i_pass_min:
-                i_e2 = "max value difference %0.1f%% > %0.1f%% threshold" % \
+                i_e2 = "min value difference %0.1f%% > %0.1f%% threshold" % \
                         (i_run_diff["pct_minmax_diff"][0]*100,
                             MAX_SUPPORTED_EXTREME_PERCENT_DIFFERENCE*100)
             elif i_pass_max and (not i_pass_min):
-                i_e2 = "min value difference %0.1f%% > %0.1f%% threshold" % \
+                i_e2 = "max value difference %0.1f%% > %0.1f%% threshold" % \
                         (i_run_diff["pct_minmax_diff"][1]*100,
                         MAX_SUPPORTED_EXTREME_PERCENT_DIFFERENCE*100)
             else:
-                i_e2 = "both max (%0.1f%%) and min (%0.1f%%) differences > %0.1f%% threshold" % \
+                i_e2 = "both min (%0.1f%%) and max (%0.1f%%) differences > %0.1f%% threshold" % \
                         (i_run_diff["pct_minmax_diff"][0]*100,
                          i_run_diff["pct_minmax_diff"][1]*100,
                          MAX_SUPPORTED_EXTREME_PERCENT_DIFFERENCE*100)
             echo(f"{i_e} FAIL simulated discharge comparisoncomparison ({i_e2}).")
+            echo(f"{i_e}   NexGen range: {i_run_diff['ngen_range']}.")
+            echo(f"{i_e}    Raven range: {i_run_diff['raven_range']}.")
             issues_with_values.append(i_run)
             del i_e2
         del i_run, i_run_diff, i_pass_max, i_pass_min, i_e
@@ -456,6 +466,8 @@ def run_nexgen_serial(meta_info: dict) -> bool:
         return True
     
     echo(f"NGen failed to run. Exit code: {process.returncode}.")
+    echo(f"NGen stdout:")
+    echo(std_out)
     echo(f"NGen stderr:")
     echo(std_err)
 

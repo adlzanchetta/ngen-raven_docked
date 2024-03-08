@@ -1,0 +1,60 @@
+{
+	
+    "global": {
+		"formulations": [
+				{
+					"name": "bmi_c++",
+					"params": {
+						"model_type_name": "raven",
+						"library_file": "/raven/build/libravenbmi.so",
+						"init_config": "",
+						"main_output_variable": "OUTFLOW",
+						"variables_names_map": {
+							"TEMP_DAILY_MIN": "TEMP_DAILY_MIN",
+                            "TEMP_DAILY_MAX": "TEMP_DAILY_MAX",
+                            "PRECIP": "PRECIP"
+						},
+						"create_function": "bmi_model_create",
+						"destroy_function_": "bmi_model_destroy",
+						"uses_forcing_file": false
+					}
+				}
+		],
+		"forcing": {
+			"path": "",
+			"provider": "CsvPerFeature"
+		}
+	},
+    "time": {
+        "start_time": "1954-01-01 00:00:00",
+        "end_time":   "2010-12-31 00:00:00",
+        "output_interval": 86400
+    },
+    "catchments": {
+        "cat-1": {
+            "formulations": [
+                {
+                    "name": "bmi_c++",
+                    "params": {
+                        "model_type_name": "raven",
+                        "library_file": "/raven/build/libravenbmi.so",
+                        "init_config": "/data/2_models_inputs/init_confs/cat-1.yaml",
+                        "main_output_variable": "OUTFLOW",
+                        "variables_names_map": {
+                            "TEMP_DAILY_MIN": "TEMP_DAILY_MIN",
+                            "TEMP_DAILY_MAX": "TEMP_DAILY_MAX",
+                            "PRECIP": "PRECIP_mm-d"
+                        },
+                        "create_function": "bmi_model_create",
+                        "destroy_function_": "bmi_model_destroy",
+                        "uses_forcing_file": false
+                    }
+                }
+            ],
+            "forcing": {
+                "path": "/data/1_raw/forcing/model_basin_mean_forcing_Santa-Clara.csv",
+                "provider": "CsvPerFeature"
+            }
+        }
+    }
+}

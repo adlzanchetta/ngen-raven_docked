@@ -1,0 +1,2 @@
+observed_data_series,filename,DIAG_NASH_SUTCLIFFE,DIAG_RMSE,DIAG_KLING_GUPTA,
+HYDROGRAPH_ALL[1],data_obs/06472000/model_basin_streamflow.rvt,0.75903,14.8052,0.741912,

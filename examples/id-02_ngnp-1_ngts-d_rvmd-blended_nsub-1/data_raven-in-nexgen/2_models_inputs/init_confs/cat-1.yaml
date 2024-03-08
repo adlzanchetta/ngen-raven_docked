@@ -1,0 +1,10 @@
+### comand line case
+cli_args: /data/1_raw/input/06472000 -p /data/1_raw/params/06472000.rvp -c /data/1_raw/inicond/06472000.rvc -h /data/2_models_inputs/rvhs/06472000.rvh -r cat-1 -s
+input_vars:
+- TEMP_DAILY_MIN: forcing
+- TEMP_DAILY_MAX: forcing
+- PRECIP: forcing
+output_vars:
+- OUTFLOW: subbasin_state
+- SOIL[0]: hru_state
+- SNOW: hru_state

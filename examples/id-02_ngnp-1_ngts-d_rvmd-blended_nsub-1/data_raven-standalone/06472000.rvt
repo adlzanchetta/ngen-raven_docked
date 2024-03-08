@@ -1,0 +1,23 @@
+#########################################################################                                  
+:FileType          rvt ASCII Raven rev252 (v2.9)                                                                             
+:WrittenBy         James Craig & Juliane Mai                                                                       
+:CreationDate      June 2019
+#
+# RAVEN run of JAMES R NEAR STRATFORD,SD (06472000) using weighted model options                                                            
+#------------------------------------------------------------------------
+
+# meteorological forcings
+:Gauge
+  :Latitude  	        46.50641293
+  :Longitude 	      -98.66188705
+  :Elevation 	       482.92759840
+  # :RainCorrection       8.152158E-01
+  # :SnowCorrection       1.198061E+00
+  :RainCorrection       1.0
+  :SnowCorrection       1.0
+  #
+  :RedirectToFile data_obs/06472000/model_basin_mean_forcing_Santa-Clara.rvt 
+:EndGauge
+
+# observed streamflow
+:RedirectToFile data_obs/06472000/model_basin_streamflow.rvt 

@@ -1,0 +1,20 @@
+#########################################################################                                  
+:FileType          rvh ASCII Raven rev252 (v2.9)                                                                             
+:WrittenBy         James Craig & Juliane Mai                                                                       
+:CreationDate      June 2019
+#
+# RAVEN run of JAMES R NEAR STRATFORD,SD (06472000) using weighted model options                                                            
+#------------------------------------------------------------------------                            
+#                                                                                                           
+#                                                                                                               
+:SubBasins                                                                                                              
+        :Attributes     NAME    DOWNSTREAM_ID   PROFILE   REACH_LENGTH    GAUGED                                                          
+        :Units          none    none            none      km              none                                                                                                    
+        1,             cat-1,   -1,             NONE,     _AUTO,          1
+:EndSubBasins                                                                                                                           
+                                                                                                                
+:HRUs                                                                                                           
+        :Attributes     AREA    ELEVATION  LATITUDE    LONGITUDE  BASIN_ID  LAND_USE_CLASS  VEG_CLASS SOIL_PROFILE AQUIFER_PROFILE TERRAIN_CLASS    SLOPE   ASPECT  
+        :Units           km2            m       deg          deg      none            none       none         none            none          none      deg      deg     
+                 1     22730.37518000,        482.92759840,  46.50641293,   -98.66188705,         1          FOREST     FOREST    DEFAULT_P         [NONE]     DEFAULT_T   0.59092225        0
+:EndHRUs
